@@ -36,9 +36,9 @@ public class SpringSecurity {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     return http.authorizeHttpRequests(request -> request
             .requestMatchers("/public/**").permitAll()
+                    .requestMatchers("/user/post").permitAll()
+            .requestMatchers("/journal/**").authenticated()
 
-            .requestMatchers("/journal/**","/user/**").authenticated()
-            .requestMatchers("/user/post").permitAll()  // Allowing access to create new user
             .requestMatchers("/admin/**").hasRole("ADMIN")
             .anyRequest().authenticated()) .httpBasic(Customizer.withDefaults())
 
