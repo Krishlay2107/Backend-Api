@@ -35,14 +35,13 @@ public class SpringSecurity {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     return http.authorizeHttpRequests(request -> request
-            .requestMatchers("/public/**").permitAll()
-                    .requestMatchers("/user/post").permitAll()
-            .requestMatchers("/journal/**").authenticated()
-
-            .requestMatchers("/admin/**").hasRole("ADMIN")
-            .anyRequest().authenticated()) .httpBasic(Customizer.withDefaults())
-
-            .csrf(AbstractHttpConfigurer::disable) .build(); }
+                    .requestMatchers("/Public/**").permitAll()
+                    .requestMatchers("/journal/**","/user/**").authenticated()
+                    .requestMatchers("/admin/**").hasRole("ADMIN")
+                    .anyRequest().authenticated())
+                    .httpBasic(Customizer.withDefaults())
+                    .csrf(AbstractHttpConfigurer::disable)
+                      .build(); }
 
 
 @Autowired public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception

@@ -26,9 +26,9 @@ public class UserServices {
         return userEntryRepo.save(user); // Return the saved user
     }
 
-    public User saveNewEntry(User user) {
-        return userEntryRepo.save(user); // Return the saved user
-    }
+//    public User saveNewEntry(User user) {
+//        return userEntryRepo.save(user); // Return the saved user
+//    }
 
 
     public List<User> getAll(){
