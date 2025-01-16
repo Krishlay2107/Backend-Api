@@ -20,19 +20,25 @@ public class UserServices {
 
      private   PasswordEncoder passwordEncoder= new BCryptPasswordEncoder();
 
-    public User saveEntry(User user) {
+    public User saveNewUser(User user) {
           user.setPassword(passwordEncoder.encode(user.getPassword()));
           user.setRoles(Arrays.asList("USER"));
-        return userEntryRepo.save(user); // Return the saved user
+        return userEntryRepo.save(user);
     }
 
-//    public User saveNewEntry(User user) {
-//        return userEntryRepo.save(user); // Return the saved user
-//    }
+    public User saveUser(User user) {
+        return userEntryRepo.save(user);
+    }
+
+    public User saveNewAdmin(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoles(Arrays.asList("USER","ADMIN"));
+        return userEntryRepo.save(user);
+    }
 
 
-    public List<User> getAll(){
-           return  userEntryRepo.findAll();
+       public List<User> getAll(){
+        return  userEntryRepo.findAll();
        }
 
         public  User findByUsername(String username){
@@ -48,6 +54,15 @@ public class UserServices {
            userEntryRepo.deleteById(id);
 
        }
+        public  void  deleteByuserName(String userName){
+         userEntryRepo.deleteByuserName(userName);
+        }
+
+
+
+
+
+
 
 
 

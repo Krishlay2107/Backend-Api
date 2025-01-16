@@ -29,9 +29,8 @@ private UserServices userServices;
           User user = userServices.findByUsername(userName);
           JournalEntry savedEntry= journalEntryRepo.save(journalEntry);
           // journalEntries is list  so we  are adding saved journalEntry in entries to build small connection
-
           user.getJournalEntries().add(savedEntry);
-          userServices.saveEntry(user);
+          userServices.saveUser(user);
 
       } catch (Exception e) {
           System.out.println(e);
@@ -46,20 +45,34 @@ private UserServices userServices;
     }
 
     public List<JournalEntry> getAll(){
-      return journalEntryRepo.findAll();
+
+        return journalEntryRepo.findAll();
     }
 
      public Optional<JournalEntry> getbyID(ObjectId id){
+
         return journalEntryRepo.findById( id);
      }
 
-      public   void deleteById(ObjectId id,String userName){
-         User user=userServices.findByUsername(userName);
-          user.getJournalEntries().removeIf(x -> x.getId().equals(id));
-          userServices.saveEntry(user);
-          journalEntryRepo.deleteById(id);
+     @Transactional
+      public  boolean deleteById(ObjectId id,String userName){
+         try {
+             User user=userServices.findByUsername(userName);
+             boolean flag= user.getJournalEntries().removeIf(x -> x.getId().equals(id)); //  strewam api  use for  remove
+             if(flag){
+                 userServices.saveUser(user);
+                  journalEntryRepo.deleteById(id);
+                   return  true;
+             }
+         } catch (Exception e) {
+              System.out.println(e);
+             throw new RuntimeException("An error occured while  deleteing entry");
+         }
+          return  false;
+    }
 
-      }
+
+
 
 
 }

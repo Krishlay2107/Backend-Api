@@ -1,10 +1,13 @@
 package com.springbootProject.Journalapp.Controller;
 
 import com.springbootProject.Journalapp.entity.User;
+import com.springbootProject.Journalapp.repository.UserEntryRepo;
 import com.springbootProject.Journalapp.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,7 +18,8 @@ public class UserCntroller {
 
       @Autowired
       private UserServices userServices;
-     
+      @Autowired
+     private  UserEntryRepo    userEntryRepo;
      @GetMapping
      public List<User> getAllUser(){
          return userServices.getAll();
@@ -24,17 +28,28 @@ public class UserCntroller {
 
 
 
-     @PutMapping("/{userName}")
-       public ResponseEntity<?>  updateUser(@RequestBody  User user,@PathVariable String userName ){
+     @PutMapping("/update")
+       public ResponseEntity<?>  updateUser(@RequestBody  User user ){
+         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+           String userName=authentication.getName();
            User userInDb= userServices.findByUsername(userName);
-            if(userInDb!=null){
+
                 userInDb.setUserName(user.getUserName());
                  userInDb.setPassword(user.getPassword());
-                  userServices.saveEntry(userInDb);
-                   return new   ResponseEntity<>(HttpStatus.ACCEPTED);
-            }
+                  userServices.saveNewUser(userInDb);
+
+
              return  new ResponseEntity<>(HttpStatus.NO_CONTENT);
      }
+
+     @DeleteMapping
+      public  ResponseEntity<?> deleteByUserName(){
+
+         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+         userEntryRepo.deleteByuserName(authentication.getName());
+          return  new ResponseEntity<>(HttpStatus.NO_CONTENT);
+     }
+
 
 
 }

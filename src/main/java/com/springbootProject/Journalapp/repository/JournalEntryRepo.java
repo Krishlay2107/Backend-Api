@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface JournalEntryRepo extends MongoRepository<JournalEntry, ObjectId> {
-
+   // List<JournalEntry> findByUserName(String userName);
 
 }
