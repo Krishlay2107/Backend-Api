@@ -185,3 +185,5 @@ The `SpringSecurity` class configures security features for the JournalApp REST 
 
 
 
+
+
