@@ -10,6 +10,10 @@ public class Health {
           return " i am fine ";
      }
 
+          public  String m2(){
+               return " i am fine ";
+          }
+
 }
 
 
