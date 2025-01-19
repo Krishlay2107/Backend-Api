@@ -1,10 +1,15 @@
 ## Getting Started
 
 To setup on your local system:
+
  Clone the repository.
- Install  intillj or ecclipse or vs code. 
+ 
+ Install  intillj or ecclipse or vs code.
+ 
  Set Up MongoDB as the Database.
+ 
  Configure Database Connection in Your Project.
+ 
   Run  the  main application .
 
 ## Key Features
