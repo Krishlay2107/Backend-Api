@@ -1,5 +1,6 @@
 package com.springbootProject.Journalapp.services;
 
+
 import com.springbootProject.Journalapp.entity.User;
 import com.springbootProject.Journalapp.repository.UserEntryRepo;
 import org.bson.types.ObjectId;
@@ -16,7 +17,7 @@ import java.util.Optional;
 public class UserServices {
 
     @Autowired
-     private UserEntryRepo userEntryRepo;
+  private  UserEntryRepo userEntryRepo;
 
      private   PasswordEncoder passwordEncoder= new BCryptPasswordEncoder();
 

@@ -1,5 +1,7 @@
 package com.springbootProject.Journalapp.Controller;
 
+
+
 import com.springbootProject.Journalapp.entity.User;
 import com.springbootProject.Journalapp.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +17,9 @@ public class AdminController {
 
     //  used to handle the admin controlll
 
-    @Autowired
-     private UserServices userServices;
+   @Autowired
+   private UserServices userServices;
+
     @GetMapping("/all-users")
      public ResponseEntity<?> getAllUser(){
            List<User> users =userServices.getAll();

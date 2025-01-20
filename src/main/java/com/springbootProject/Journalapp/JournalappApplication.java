@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class JournalappApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(JournalappApplication.class, args);
 
 	}

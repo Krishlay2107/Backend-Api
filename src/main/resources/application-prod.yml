@@ -1,0 +1,11 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://krishlaysharma3720:krishlay%4021@clusterjournal-shard-00-00.kkq09.mongodb.net:27017,clusterjournal-shard-00-01.kkq09.mongodb.net:27017,clusterjournal-shard-00-02.kkq09.mongodb.net:27017/?ssl=true&replicaSet=atlas-wtb5zk-shard-0&authSource=admin&retryWrites=true&w=majority&appName=ClusterJournal
+      database: journaldb
+      auto-index-creation: true
+
+  server:
+    port: 8081
+servlet:
+  contextpath:/journal
