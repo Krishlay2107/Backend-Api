@@ -18,7 +18,13 @@ public class PublicController {
 
      @PostMapping("/post")
      public ResponseEntity<?> createUser(@RequestBody User user) {
-          userServices.saveNewUser(user);
-          return new ResponseEntity<>(HttpStatus.CREATED);
+         boolean flag= userServices.saveNewUser(user);
+           if(flag){
+                return new ResponseEntity<>(HttpStatus.CREATED);
+           }else {
+                return new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
+           }
+
+
      }
 }

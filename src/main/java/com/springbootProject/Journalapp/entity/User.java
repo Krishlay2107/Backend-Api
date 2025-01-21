@@ -21,11 +21,12 @@ public class User {
        @Id
        private ObjectId id;
 
-       public @NonNull String getUserName() {
+    @NonNull
+       public  String getUserName() {
               return userName;
        }
-
-       public void setUserName(@NonNull String userName) {
+    @NonNull
+       public void setUserName( String userName) {
               this.userName = userName;
        }
 

@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class JournalappApplication {
 
 	public static void main(String[] args) {
-
+// this will print which profile i am usinggg 
 		ConfigurableApplicationContext context=SpringApplication.run(JournalappApplication.class, args);
 		 System.out.println(context.getEnvironment());
 
