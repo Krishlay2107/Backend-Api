@@ -3,9 +3,8 @@ package com.springbootProject.Journalapp.services;
 
 import com.springbootProject.Journalapp.entity.User;
 import com.springbootProject.Journalapp.repository.UserEntryRepo;
+import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,14 +13,14 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-
+@Slf4j
 @Component
 public class UserServices {
 
     @Autowired
   private  UserEntryRepo userEntryRepo;
-
-    private static final Logger logger= LoggerFactory.getLogger(UserServices.class);
+    // tjis is way to create s;f4j
+   // private static final Logger logger= LoggerFactory.getLogger(UserServices.class);
 
     private   PasswordEncoder passwordEncoder= new BCryptPasswordEncoder();
 
@@ -32,12 +31,8 @@ public class UserServices {
               userEntryRepo.save(user);
               return  true;
          } catch (RuntimeException e) {
-             logger.info("hahahahaha");
-             logger.trace("traceeing");
-             logger.error("eroorrr");
-             logger.debug("debugggggg");
-             logger.warn("warninggggg ");
-              return false;
+             log.error("Failed to save new user: {}", user.getUserName(), e);
+             return false;
 
          }
 

@@ -5,7 +5,10 @@ spring:
       database: journaldb
       auto-index-creation: true
 
+
+
   server:
     port: 8081
-servlet:
-  contextpath:/journal
+  servlet:
+   contextpath:/journal
+
