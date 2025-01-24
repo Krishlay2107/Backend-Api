@@ -7,5 +7,6 @@ spring:
 
     server:
       port: 8082
-servlet:
-  contextpath:/journal
+      servlet:
+        contextpath: /journal
+
