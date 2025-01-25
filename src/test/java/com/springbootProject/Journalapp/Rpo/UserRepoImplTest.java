@@ -1,6 +1,7 @@
 package com.springbootProject.Journalapp.Rpo;
 
 import com.springbootProject.Journalapp.repository.UserRepoImpl;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,7 +14,7 @@ public class UserRepoImplTest {
 
 @Test
  public  void testNewUser(){
-     userRepo.getUserforSA();
+     Assertions.assertNotNull(userRepo.getUserforSA());
 
  }
 
