@@ -1,6 +1,7 @@
 package com.springbootProject.Journalapp.entity;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -16,6 +17,7 @@ import java.util.List;
 @Document(collection = "users")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
        @Id
@@ -35,6 +37,10 @@ public class User {
        private String userName;
        @NonNull
        private String password;
+
+        private  String email;
+
+        private  boolean sentimenatAnalysis;
 
         private List<String> roles;
        @DBRef
