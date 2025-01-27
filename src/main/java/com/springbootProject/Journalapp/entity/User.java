@@ -40,7 +40,15 @@ public class User {
 
         private  String email;
 
-        private  boolean sentimenatAnalysis;
+    public boolean isSentimenatAnalysis() {
+        return sentimenatAnalysis;
+    }
+
+    public void setSentimenatAnalysis(boolean sentimenatAnalysis) {
+        this.sentimenatAnalysis = sentimenatAnalysis;
+    }
+
+    private  boolean sentimenatAnalysis;
 
         private List<String> roles;
        @DBRef
