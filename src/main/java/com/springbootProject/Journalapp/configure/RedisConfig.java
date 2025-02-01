@@ -8,9 +8,11 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 public class RedisConfig {
 
+
+//RedisConnectionFactory is interface which is used to manage the connection b/w the  adata store in rediis or redis
     @Bean
     public RedisTemplate redisTemplate(RedisConnectionFactory redisConnectionFactory){
-    RedisTemplate redisTemplate= new RedisTemplate();
+    RedisTemplate redisTemplate= new RedisTemplate<>();
 
     redisTemplate.setConnectionFactory(redisConnectionFactory);
 

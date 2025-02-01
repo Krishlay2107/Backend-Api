@@ -3,6 +3,7 @@ package com.springbootProject.Journalapp.Controller;
 import com.springbootProject.Journalapp.apiresponses.WeatherResponse;
 import com.springbootProject.Journalapp.entity.User;
 import com.springbootProject.Journalapp.repository.UserEntryRepo;
+import com.springbootProject.Journalapp.services.CacheService;
 import com.springbootProject.Journalapp.services.UserServices;
 import com.springbootProject.Journalapp.services.WeatherServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class UserCntroller {
 
       @Autowired
       private UserServices userServices;
+
+      @Autowired
+      private CacheService cacheService;
 
 
       @Autowired
@@ -61,17 +65,19 @@ public class UserCntroller {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-       WeatherResponse weatherResponse= weatherServices.getWeather("Delhi");
+       WeatherResponse weatherResponse= weatherServices.getWeather("London");
+
+
        System.out.println(weatherResponse);
 
        String greeting="";
           if (weatherResponse!=null){
-              greeting=  "its feels like"+  weatherResponse.getCurrent().getTemperature();
+              greeting=  " its feels like  "+weatherResponse.getCurrent().getTemperature();
           }else {
               greeting += ", but we're unable to fetch the weather details for Mumbai right now.";
           }
                 //  userEntryRepo.deleteByuserName(authentication.getName());
-        return  new ResponseEntity<>("hii"+ authentication.getName()+greeting,HttpStatus.OK);
+        return  new ResponseEntity<>("hii "+   authentication.getName() +  greeting,HttpStatus.OK);
     }
 
 

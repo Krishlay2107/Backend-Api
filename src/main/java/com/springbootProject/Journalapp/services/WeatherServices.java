@@ -15,30 +15,38 @@ public class WeatherServices {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+     private  RedisService redisService;
+
     @Value("${weather.api.key}")
     private String weatherApiKey;
 
     @Autowired
-     private AppCache appCache;
-
-
+    private AppCache appCache;
 
     public WeatherResponse getWeather(String city) {
-        String baseUrl = appCache.app_Cache.get("weather_Api");
+          WeatherResponse redisWeatherResponse=  redisService.get("weather_of_"+city,WeatherResponse.class);
 
-        // Check if baseUrl is null
-        if (baseUrl == null) {
-            throw new IllegalStateException("Weather API base URL not found in the cache");
-        }
+           if(redisWeatherResponse!=null){
+                return redisWeatherResponse;
 
-        // Replace placeholders in the URL
-        String finalUrl = baseUrl.replace("city", city).replace("apiKey", weatherApiKey);
+           }
+            else{
+               // Retrieve the weather API URL from the cache and replace placeholders
+               String finalUrl = appCache.recordsforApi.get("weather_Api")
+                       .replace("CITY", city)
+                       .replace("ApiKey", weatherApiKey);
+               // Make the GET request to the weather API
+               ResponseEntity<WeatherResponse> response = restTemplate.exchange(finalUrl, HttpMethod.GET, null, WeatherResponse.class);
+               WeatherResponse body=response.getBody();
+               if (body != null) {
+                   redisService.set(city, body, 900);
+               }
+                 return body;
 
-        // Make the API request
-        ResponseEntity<WeatherResponse> response = restTemplate.exchange(finalUrl, HttpMethod.GET, null, WeatherResponse.class);
 
-        // Return the response body
-        return response.getBody();
+           }
+
     }
 
 }

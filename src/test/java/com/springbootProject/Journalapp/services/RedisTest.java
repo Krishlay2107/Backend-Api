@@ -14,10 +14,12 @@ public class RedisTest {
     @Test
      public  void testforemail(){
          redisTemplate.opsForValue().set("email","krishlaysharma3720@gmail.com");
-          Object  sal=redisTemplate.opsForValue().get("sal");
-          System.out.print(sal);
+          Object  mail=redisTemplate.opsForValue().get("email");
+        Object  salary=redisTemplate.opsForValue().get("salary");
+           System.out.println(mail);
 
-          int a=1;
+        System.out.println(salary);
+           int a=1;
      }
 
 
