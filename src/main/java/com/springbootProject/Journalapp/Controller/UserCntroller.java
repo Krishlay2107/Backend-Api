@@ -42,14 +42,11 @@ public class UserCntroller {
        public ResponseEntity<?>  updateUser(@RequestBody  User user ){
          Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
            String userName=authentication.getName();
-           User userInDb= userServices.findByUsername(userName);
-
-                userInDb.setUserName(user.getUserName());
+             User userInDb= userServices.findByUsername(userName);
+               userInDb.setUserName(user.getUserName());
                  userInDb.setPassword(user.getPassword());
                   userServices.saveNewUser(userInDb);
-
-
-             return  new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                  return  new ResponseEntity<>(HttpStatus.NO_CONTENT);
      }
 
      @DeleteMapping
@@ -64,12 +61,8 @@ public class UserCntroller {
     public  ResponseEntity<?> Greeting(){
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-       WeatherResponse weatherResponse= weatherServices.getWeather("London");
-
-
+        WeatherResponse weatherResponse= weatherServices.getWeather("London");
        System.out.println(weatherResponse);
-
        String greeting="";
           if (weatherResponse!=null){
               greeting=  " its feels like  "+weatherResponse.getCurrent().getTemperature();
