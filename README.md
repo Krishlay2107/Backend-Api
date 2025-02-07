@@ -2,15 +2,15 @@
 
 To setup on your local system:
 
- Clone the repository.
- 
- Install  intillj or ecclipse or vs code.
- 
- Set Up MongoDB as the Database.
- 
- Configure Database Connection in Your Project.
- 
-  Run  the  main application .
+Clone the repository.
+
+Install  intillj or ecclipse or vs code.
+
+Set Up MongoDB as the Database.
+
+Configure Database Connection in Your Project.
+
+Run  the  main application .
 
 ## Key Features
 
@@ -35,8 +35,8 @@ To setup on your local system:
 - **Admin Access:** Admins have access to view the list of users and manage user data.
 - **Password Security:** Use of password encryption techniques like `BCryptPasswordEncoder` for secure storage of passwords.
 
-   
-   # Controller -----> Services -----> Repositor  ( calling happen in this way )
+
+# Controller -----> Services -----> Repositor  ( calling happen in this way )
 
 
 
@@ -171,24 +171,255 @@ The `SpringSecurity` class configures security features for the JournalApp REST 
 
 - `configureGlobal(AuthenticationManagerBuilder auth)`: Configures global authentication.
   - `auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder)`: Sets the custom user details service and password encoder for authentication.
+  # WeatherResponse Class
+
+The `WeatherResponse` class represents the response from a weather API in the JournalKeeper application.
+
+## Fields
+
+- `current` (`Current`): Represents the current weather conditions.
+
+## Methods
+
+- `getCurrent()`: Returns the current weather conditions.
+- `setCurrent(Current current)`: Sets the current weather conditions.
+
+## Inner Class: Current
+
+The `Current` class represents the current weather conditions.
+
+### Fields
+
+- `temperature` (`int`): Represents the current temperature.
+
+### Methods
+
+- `getTemperature()`: Returns the current temperature.
+- `setTemperature(int temperature)`: Sets the current temperature.
+
+## Annotations
+
+- `@Getter`: Lombok annotation to generate getter methods.
+- `@Setter`: Lombok annotation to generate setter methods.
+
+
+
+# AppCache Class
+
+The `AppCache` class is responsible for managing an in-memory cache for the JournalKeeper application. It initializes the cache with data from the database upon application startup.
+
+## Annotations
+
+- `@Component`: Indicates that this class is a Spring component, making it eligible for component scanning and dependency injection.
+- `@Autowired`: Marks a field to be autowired by Spring's dependency injection.
+- `@PostConstruct`: Indicates that the `init` method should be executed after the bean's properties have been set.
+
+## Fields
+
+- `configureApiRepo` (`ConfigureApiRepo`): Repository for accessing `CacheEntity` data from the database.
+- `recordsforApi` (`Map<String, String>`): A thread-safe map for storing cache records.
+
+## Methods
+
+### `init()`
+
+- Initializes the `recordsforApi` map with data from the `configureApiRepo` repository.
+- Fetches all `CacheEntity` records from the database and populates the cache.
+
+
+
+The `RedisConfig` class is responsible for configuring Redis in the JournalKeeper application. It sets up the `RedisTemplate` bean, which is used to interact with the Redis data store.
+
+## Annotations
+
+- `@Configuration`: Indicates that this class is a configuration class and may contain bean definitions.
+- `@Bean`: Indicates that a method produces a bean to be managed by the Spring container.
+
+## Methods
+
+### `redisTemplate(RedisConnectionFactory redisConnectionFactory)`
+
+- Configures and returns a `RedisTemplate` bean.
+- **Parameters:**
+  - `redisConnectionFactory` (`RedisConnectionFactory`): Manages the connection between the application and the Redis data store.
+- **Returns:**
+  - `RedisTemplate`: Configured `RedisTemplate` bean for interacting with Redis.
+
+### Configuration Details
+
+- **Key Serializer:** Uses `StringRedisSerializer` to serialize keys as strings.
+- **Value Serializer:** Uses `StringRedisSerializer` to serialize values as strings.
+
+
+
+# CacheController Class
+
+The `CacheController` class is a REST controller for managing cache entries in the JournalKeeper application.
+
+## Annotations
+
+- `@RestController`: Indicates that this class is a REST controller.
+- `@RequestMapping("/API")`: Maps HTTP requests to `/API` to this controller.
+- `@Autowired`: Marks a field to be autowired by Spring's dependency injection.
+
+## Fields
+
+- `cacheService` (`CacheService`): Service for managing cache entries.
+
+## Endpoints
+
+### `POST /API`
+
+- **Description:** Adds a new cache entry.
+- **Parameters:**
+  - `entry` (`CacheEntity`): The cache entry to be added.
+- **Returns:**
+  - `ResponseEntity<?>`: HTTP status code indicating the result of the operation.
+
+
+# JwtFilter Class
+
+The `JwtFilter` class is a custom filter that intercepts HTTP requests to validate JWT tokens in the JournalKeeper application. It extends `OncePerRequestFilter` to ensure that the filter is executed once per request.
+
+## Annotations
+
+- `@Component`: Indicates that this class is a Spring component, making it eligible for component scanning and dependency injection.
+
+## Fields
+
+- `userDetailsService` (`UserDetailsService`): Service for loading user-specific data.
+- `jwtUtils` (`JwtUtils`): Utility class for handling JWT operations.
+
+## Methods
+
+### `doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)`
+
+- **Description:** Intercepts HTTP requests to validate JWT tokens.
+- **Parameters:**
+  - `request` (`HttpServletRequest`): The HTTP request.
+  - `response` (`HttpServletResponse`): The HTTP response.
+  - `chain` (`FilterChain`): The filter chain.
+- **Implementation:**
+  - Extracts the JWT token from the `Authorization` header.
+  - Validates the token and sets the authentication in the security context if valid.
+  - Allows requests to Swagger endpoints without validation.
+
+
+# ConfigureApiRepo Interface
+
+The `ConfigureApiRepo` interface is a repository for managing `CacheEntity` objects in the JournalKeeper application. It extends `MongoRepository` to provide CRUD operations for `CacheEntity` objects stored in a MongoDB database.
+
+## Annotations
+
+- `@Repository`: Indicates that this interface is a Spring Data repository (implicitly applied by extending `MongoRepository`).
+
+## Methods
+
+The `ConfigureApiRepo` interface inherits several methods from `MongoRepository` for performing CRUD operations:
+
+- `save(S entity)`: Saves a given entity.
+- `findById(ID id)`: Retrieves an entity by its ID.
+- `findAll()`: Retrieves all entities.
+- `deleteById(ID id)`: Deletes an entity by its ID.
+
+
+
+## WeatherServices Class
+
+The `WeatherServices` class provides services for fetching weather information from an external API and caching the results.
+
+### Annotations
+
+- `@Service`: Indicates that this class is a Spring service component.
+
+### Fields
+
+- `restTemplate` (`RestTemplate`): Used to make HTTP requests.
+- `redisService` (`RedisService`): Service for interacting with Redis.
+- `weatherApiKey` (`String`): API key for the weather service.
+- `appCache` (`AppCache`): In-memory cache for storing API URLs.
+
+### Methods
+
+- `getWeather(String city)`: Fetches weather information for the specified city. It first checks the Redis cache and, if not found, makes an HTTP request to the weather API and caches the result.
+
+## EmailServices Class
+
+The `EmailServices` class provides services for sending emails.
+
+### Annotations
+
+- `@Service`: Indicates that this class is a Spring service component.
+- `@Slf4j`: Lombok annotation to generate a logger.
+
+### Fields
+
+- `javaMailSender` (`JavaMailSender`): Used to send emails.
+
+### Methods
+
+- `sendEmail(String to, String subject, String body)`: Sends an email with the specified recipient, subject, and body.
+
+## RedisService Class
+
+The `RedisService` class provides services for interacting with Redis.
+
+### Annotations
+
+- `@Service`: Indicates that this class is a Spring service component.
+- `@Slf4j`: Lombok annotation to generate a logger.
+
+### Fields
+
+- `redisTemplate` (`RedisTemplate`): Used to interact with Redis.
+
+### Methods
+
+- `get(String key, Class<T> EntityClass)`: Retrieves an object from Redis by its key.
+- `set(String key, Object o, long ttl)`: Stores an object in Redis with a specified time-to-live (TTL).
+
+# JwtUtils Class
+
+The `JwtUtils` class provides utility methods for generating, validating, and extracting information from JWT tokens in the JournalKeeper application.
+
+## Annotations
+
+- `@Component`: Indicates that this class is a Spring component, making it eligible for component scanning and dependency injection.
+
+## Fields
+
+- `SECRET_KEY` (`String`): Secret key used for signing JWT tokens.
+
+## Methods
+
+### `extractUsername(String token)`
+### `extractExpiration(String token)`
+### `generateToken(String username)`
+### `validateToken(String token)`
+
+-### Private Methods
+
+#### `getSigningKey()`
+#### `extractAllClaims(String token)`
+#### `isTokenExpired(String token)`
+#### `createToken(Map<String, Object> claims, String subject)`
 
 
 ## Frameworks and Technologies Used
-      ### Spring Boot
-      ### Spring Data MongoDB
-      ### Spring Security
-      ### Lombok
-      ### MongoDB Atlas
 
-
-
-
-
-
-
-
-
-
-
-
-
+### Spring Boot
+### Spring Data MongoDB
+### Spring Security
+### Spring Security OAuth2
+### Lombok
+### MongoDB Atlas
+### Maven
+### Redis
+### JWT (JSON Web Tokens)
+### RestTemplate
+### JavaMailSender
+### Jakarta Annotations
+### Jackson
+### JUnit
+### Mockito
+### Apache Kafka
