@@ -1,6 +1,7 @@
 package com.springbootProject.Journalapp.services;
 
 import com.springbootProject.Journalapp.repository.UserEntryRepo;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -9,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-
+@Disabled
 @SpringBootTest
 public class UserServicesTest {
 

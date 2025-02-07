@@ -31,7 +31,7 @@ public class UserServices {
               userEntryRepo.save(user);
               return  true;
          } catch (RuntimeException e) {
-             log.error("Failed to save new user: {}", user.getUserName(), e);
+             System.out.println("Failed to save new user: {}"+ user.getUserName()+","+e);
              return false;
 
          }

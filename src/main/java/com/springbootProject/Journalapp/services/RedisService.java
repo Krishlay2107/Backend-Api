@@ -22,11 +22,11 @@ public class RedisService {
                 ObjectMapper mapper= new ObjectMapper();
                 return  mapper.readValue(o.toString(),EntityClass);
             }else {
-                log.info("No data found in Redis for key: {}", key);
+                System.out.println("No data found in Redis for key: {}"+ key);
                 return null;
             }
          } catch (Exception e) {
-             log.error("Exception"+e);
+             System.out.println("Exception"+e);
               return  null;
          }
      }
@@ -38,7 +38,7 @@ public class RedisService {
         redisTemplate.opsForValue().set(key,jsonVal,ttl, TimeUnit.SECONDS);
 
         } catch (Exception e) {
-            log.error("Exception occurred while saving data to Redis: ", e);
+           System.out.println("Exception occurred while saving data to Redis: "+ e);
         }
     }
 

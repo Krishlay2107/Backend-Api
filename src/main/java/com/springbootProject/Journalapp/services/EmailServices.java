@@ -22,7 +22,7 @@ public class EmailServices {
 
 
          }catch (Exception e){
-log.error("not capable of sending message ");
+System.out.println("not capable of sending message ");
          }
 
      }

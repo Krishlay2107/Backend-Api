@@ -14,7 +14,9 @@ import org.springframework.web.client.RestTemplate;
 public class JournalappApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(JournalappApplication.class, args);
+//		SpringApplication.run(JournalappApplication.class, args);
+		SpringApplication.run(JournalappApplication.class,args);
+
 	}
 
 	 @Bean
@@ -28,3 +30,4 @@ public class JournalappApplication {
 	  }
 
 }
+// ec2-user@ec2-13-53-197-111.eu-north-1.compute.amazonaws.com

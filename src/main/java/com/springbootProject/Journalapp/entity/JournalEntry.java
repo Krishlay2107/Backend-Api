@@ -25,6 +25,14 @@ public class JournalEntry {
         this.title = title;
     }
 
+    public ObjectId getId() {
+        return id;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
+    }
+
     @NonNull
     private String title;
 
@@ -37,7 +45,25 @@ public class JournalEntry {
     }
 
     private Sentiment sentiment;
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     private String content;
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
     private LocalDateTime date;
 
 }
