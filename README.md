@@ -418,8 +418,6 @@ The `JwtUtils` class provides utility methods for generating, validating, and ex
 ### JWT (JSON Web Tokens)
 ### RestTemplate
 ### JavaMailSender
-### Jakarta Annotations
-### Jackson
 ### JUnit
 ### Mockito
 ### Apache Kafka
